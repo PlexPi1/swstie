@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SVERIGE — Королівство Півночі</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+<style>
+:root{--bg:#030e1c;--gold:#FECC02;--g2:#f5a800;--blue:#006AA7;--b2:#4da8d8;--tx:#eef2f7;--mt:#7a9ab5;--gl:rgba(255,255,255,.06);--gb:rgba(255,255,255,.11);--r:20px;}
+*,::before,::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden;}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;line-height:1.1;}
+img{display:block;width:100%;height:100%;object-fit:cover;}
+
+/* ── BG: лише 2 blob замість 5, менший blur, contain замість fixed ── */
+#bg{position:fixed;inset:0;z-index:0;will-change:transform;
+  background:radial-gradient(ellipse at 15% 10%,#00213d,#030e1c 65%);}
+.bl{position:absolute;border-radius:50%;will-change:transform;
+  animation:bm 20s infinite alternate ease-in-out;}
+.b1{width:55vw;height:55vw;top:-15%;left:-15%;
+  background:radial-gradient(circle,rgba(0,106,167,.55),transparent 70%);
+  filter:blur(60px);animation-duration:22s;}
+.b2{width:40vw;height:40vw;bottom:-10%;right:-10%;
+  background:radial-gradient(circle,rgba(254,204,2,.3),transparent 70%);
+  filter:blur(60px);animation-duration:28s;animation-delay:-10s;}
+@keyframes bm{0%{transform:translate(0,0) scale(1);}100%{transform:translate(30px,40px) scale(1.08);}}
+
+/* Glass — простіший, без saturate для продуктивності */
+.glass{background:var(--gl);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--gb);box-shadow:0 6px 24px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12);}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:12px 28px;display:flex;
+  align-items:center;gap:14px;background:rgba(3,14,28,.65);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(255,255,255,.07);transition:padding .25s,background .25s;}
+#nav.scrolled{padding:8px 28px;background:rgba(3,14,28,.88);}
+.n-logo{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;
+  letter-spacing:4px;background:linear-gradient(135deg,#fff 30%,var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  flex-shrink:0;cursor:pointer;}
+.n-tabs{display:flex;gap:2px;background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.09);border-radius:50px;padding:4px;
+  margin:0 auto;overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;}
+.n-tabs::-webkit-scrollbar{display:none;}
+.nt{background:transparent;border:none;color:var(--mt);padding:7px 14px;
+  font-size:.8rem;font-weight:500;border-radius:30px;cursor:pointer;
+  transition:color .2s,background .2s,transform .2s;
+  font-family:'DM Sans',sans-serif;white-space:nowrap;display:flex;align-items:center;gap:5px;}
+.nt:hover{color:#fff;background:rgba(255,255,255,.07);}
+.nt.on{background:linear-gradient(135deg,var(--gold),var(--g2));color:#000;
+  font-weight:600;box-shadow:0 0 14px rgba(254,204,2,.35);transform:scale(1.03);}
+.n-cta{background:linear-gradient(135deg,var(--blue),var(--b2));border:none;
+  color:#fff;padding:8px 18px;border-radius:30px;font-family:'DM Sans',sans-serif;
+  font-weight:600;font-size:.8rem;cursor:pointer;white-space:nowrap;
+  box-shadow:0 3px 12px rgba(0,106,167,.35);transition:transform .2s,box-shadow .2s;flex-shrink:0;}
+.n-cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,106,167,.55);}
+
+/* ── PAGES ── */
+.pg{display:none;position:relative;z-index:1;}
+.pg.on{display:block;}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;padding:100px 20px 70px;}
+.h-eye{font-size:.72rem;letter-spacing:6px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:24px;animation:fup .7s ease-out both;}
+.h-title{font-size:clamp(3.5rem,9vw,9rem);font-weight:700;
+  line-height:.9;letter-spacing:-3px;margin-bottom:28px;animation:fup .9s ease-out .1s both;}
+.tg{background:linear-gradient(135deg,var(--gold),var(--g2) 60%,#fff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{max-width:600px;font-size:1.05rem;line-height:1.75;
+  color:var(--mt);margin-bottom:44px;animation:fup .9s ease-out .2s both;}
+.btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+.btn-g{display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--gold),var(--g2));color:#000;
+  font-weight:700;font-size:.95rem;padding:14px 30px;border-radius:50px;border:none;
+  cursor:pointer;transition:transform .2s,box-shadow .2s;
+  box-shadow:0 6px 20px rgba(254,204,2,.35);}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(254,204,2,.55);}
+.btn-o{display:inline-flex;align-items:center;gap:8px;background:transparent;
+  color:#fff;font-weight:500;font-size:.9rem;padding:13px 26px;border-radius:50px;
+  border:1px solid rgba(255,255,255,.2);cursor:pointer;transition:background .2s,border-color .2s;}
+.btn-o:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.3);}
+
+/* SCROLL HINT */
+.s-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  color:var(--mt);font-size:.7rem;letter-spacing:3px;animation:hint 2.5s infinite;}
+.s-hint i{color:var(--gold);}
+@keyframes hint{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(8px);}}
+
+/* ── FEAT CARDS ── */
+.feat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:18px;max-width:1260px;margin:0 auto;padding:0 20px 80px;}
+.fc{border-radius:18px;padding:28px 24px;cursor:pointer;
+  transition:transform .25s,box-shadow .25s;position:relative;overflow:hidden;}
+.fc::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.03),transparent);pointer-events:none;}
+.fc:hover{transform:translateY(-7px);
+  box-shadow:0 20px 48px rgba(0,0,0,.5),0 0 0 1px rgba(254,204,2,.15);}
+.fc-ic{font-size:2.4rem;margin-bottom:16px;display:block;}
+.fc-t{font-size:1.4rem;color:#fff;margin-bottom:8px;}
+.fc-d{font-size:.86rem;color:var(--mt);line-height:1.65;}
+.fc-a{display:inline-flex;align-items:center;gap:5px;margin-top:14px;
+  font-size:.78rem;font-weight:600;color:var(--gold);letter-spacing:1px;}
+
+/* ── CONTENT ── */
+.wrap{max-width:1260px;margin:0 auto;padding:0 20px 80px;}
+.sec-lbl{font-size:.7rem;letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:12px;}
+.sec-t{font-size:clamp(1.8rem,3.5vw,3.5rem);font-weight:700;color:#fff;margin-bottom:14px;}
+.sec-b{color:var(--mt);line-height:1.78;font-size:.94rem;max-width:740px;}
+
+/* STATS */
+.sstrip{display:flex;background:var(--gl);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--gb);border-radius:20px;overflow:hidden;margin-bottom:70px;
+  box-shadow:0 6px 24px rgba(0,0,0,.35);}
+.sc{flex:1;min-width:110px;padding:28px 16px;text-align:center;
+  border-right:1px solid var(--gb);transition:background .2s;}
+.sc:last-child{border-right:none;}
+.sc:hover{background:rgba(255,255,255,.05);}
+.sn{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:700;
+  color:var(--gold);line-height:1;}
+.sl{font-size:.74rem;color:var(--mt);margin-top:6px;line-height:1.3;}
+
+/* SPLIT */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:28px;
+  align-items:center;margin-bottom:70px;}
+@media(max-width:700px){.split{grid-template-columns:1fr;}}
+.t-img{border-radius:20px;overflow:hidden;height:380px;position:relative;}
+.t-img img{transition:transform .5s ease;}
+.t-img:hover img{transform:scale(1.04);}
+.t-img-ov{position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,106,167,.25),rgba(254,204,2,.08));pointer-events:none;}
+
+/* QFACTS */
+.qf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin-bottom:50px;}
+.qf{border-radius:16px;padding:24px;display:flex;gap:16px;
+  align-items:flex-start;transition:transform .25s;}
+.qf:hover{transform:translateY(-4px);}
+.qf-ic{font-size:1.7rem;flex-shrink:0;margin-top:2px;}
+.qf h4{font-size:1.05rem;color:#fff;margin-bottom:5px;}
+.qf p{font-size:.84rem;color:var(--mt);line-height:1.62;}
+
+/* CTA */
+.cta{border-radius:24px;padding:50px;text-align:center;}
+.cta h2{font-size:clamp(1.7rem,3vw,3rem);color:#fff;margin-bottom:12px;}
+.cta p{color:var(--mt);max-width:500px;margin:0 auto 28px;line-height:1.7;}
+
+/* ── INNER PAGE ── */
+.ih{min-height:52vh;display:flex;flex-direction:column;
+  justify-content:flex-end;align-items:flex-start;padding:120px 52px 52px;
+  position:relative;overflow:hidden;}
+@media(max-width:700px){.ih{padding:110px 20px 40px;}}
+.ih-bg{position:absolute;inset:0;z-index:0;}
+/* lazy load via data-src */
+.ih-bg img{opacity:0;transition:opacity .4s;}
+.ih-bg img.loaded{opacity:1;}
+.ih-ov{position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(3,14,28,1) 0%,rgba(3,14,28,.55) 45%,rgba(3,14,28,.15) 100%);z-index:1;}
+.ih-c{position:relative;z-index:2;max-width:760px;}
+.ih-tag{font-size:.7rem;letter-spacing:5px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:14px;display:block;}
+.ih-t{font-size:clamp(2.5rem,5.5vw,5.5rem);font-weight:700;color:#fff;margin-bottom:12px;}
+.ih-s{font-size:1rem;color:rgba(255,255,255,.6);line-height:1.68;max-width:600px;}
+
+/* INNER BODY */
+.ib{max-width:1260px;margin:0 auto;padding:52px 20px 90px;}
+
+/* GRIDS */
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-bottom:36px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:36px;}
+@media(max-width:700px){.g2{grid-template-columns:1fr;}}
+.g4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:30px;}
+
+/* CARDS */
+.card{border-radius:20px;overflow:hidden;transition:transform .25s,box-shadow .25s;}
+.card:hover{transform:translateY(-6px);
+  box-shadow:0 20px 50px rgba(0,0,0,.5),0 0 0 1px rgba(254,204,2,.12);}
+.c-img{height:210px;overflow:hidden;position:relative;}
+.c-img img{transition:transform .5s ease;}
+.card:hover .c-img img{transform:scale(1.05);}
+.c-ov{position:absolute;inset:0;
+  background:linear-gradient(to bottom,transparent 40%,rgba(3,14,28,.8));}
+.c-body{padding:22px;background:var(--gl);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--gb);border-top:none;}
+.c-tag{display:inline-block;background:rgba(254,204,2,.14);color:var(--gold);
+  font-size:.66rem;letter-spacing:2px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;margin-bottom:8px;}
+.c-title{font-size:1.3rem;color:#fff;margin-bottom:7px;}
+.c-text{font-size:.86rem;color:var(--mt);line-height:1.68;}
+.p-card{border-radius:20px;padding:28px;background:var(--gl);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--gb);box-shadow:0 6px 24px rgba(0,0,0,.3);transition:transform .25s;}
+.p-card:hover{transform:translateY(-4px);}
+.pc-ic{font-size:2.2rem;margin-bottom:14px;display:block;}
+
+/* INFO BLOCK */
+.info{border-radius:24px;padding:44px;margin-bottom:30px;background:var(--gl);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--gb);box-shadow:0 12px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.1);}
+@media(max-width:700px){.info{padding:24px 18px;}}
+.i-t{font-size:1.8rem;color:var(--gold);margin-bottom:16px;}
+.i-b{color:var(--mt);line-height:1.78;font-size:.92rem;}
+
+/* SROW */
+.srow{display:flex;background:var(--gl);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--gb);border-radius:20px;overflow:hidden;
+  margin-bottom:30px;box-shadow:0 6px 24px rgba(0,0,0,.35);flex-wrap:wrap;}
+.sr-c{flex:1;min-width:110px;padding:28px 14px;text-align:center;
+  border-right:1px solid var(--gb);transition:background .2s;}
+.sr-c:last-child{border-right:none;}
+.sr-c:hover{background:rgba(255,255,255,.05);}
+.sr-n{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:700;
+  color:var(--gold);line-height:1;}
+.sr-l{font-size:.73rem;color:var(--mt);margin-top:6px;line-height:1.3;}
+
+/* TIMELINE */
+.tl{padding-left:36px;position:relative;}
+.tl::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,var(--gold),var(--blue),transparent);border-radius:2px;}
+.tl-i{position:relative;margin-bottom:28px;}
+.tl-i::before{content:'';position:absolute;left:-32px;top:6px;width:10px;height:10px;
+  background:var(--gold);border-radius:50%;box-shadow:0 0 10px rgba(254,204,2,.5);}
+.tl-y{font-size:.72rem;color:var(--gold);letter-spacing:2px;font-weight:600;margin-bottom:3px;}
+.tl-t{font-size:1.1rem;font-weight:600;color:#fff;margin-bottom:4px;}
+.tl-d{color:var(--mt);font-size:.86rem;line-height:1.62;}
+
+/* ACCORDION */
+.acc{margin-bottom:30px;}
+.ac-item{margin-bottom:8px;border-radius:14px;overflow:hidden;
+  background:var(--gl);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--gb);}
+.ac-h{padding:18px 22px;display:flex;justify-content:space-between;
+  align-items:center;cursor:pointer;transition:background .2s;}
+.ac-h:hover{background:rgba(255,255,255,.05);}
+.ac-h h4{font-size:.96rem;font-weight:600;color:#fff;display:flex;
+  align-items:center;gap:10px;font-family:'DM Sans',sans-serif;}
+.ac-h h4 i{color:var(--gold);width:16px;}
+.ac-arr{color:var(--gold);transition:transform .25s;}
+.ac-item.open .ac-arr{transform:rotate(180deg);}
+.ac-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.ac-in{padding:0 22px 20px;color:var(--mt);line-height:1.75;font-size:.9rem;}
+
+/* PULL QUOTE */
+.pq{border-left:3px solid var(--gold);padding:18px 24px;margin:26px 0;
+  background:rgba(254,204,2,.04);border-radius:0 14px 14px 0;}
+.pq p{font-family:'Cormorant Garamond',serif;font-size:1.4rem;
+  font-style:italic;color:rgba(255,255,255,.88);line-height:1.5;}
+.pq cite{display:block;margin-top:8px;font-size:.8rem;color:var(--mt);}
+
+/* FLAG DIV */
+.fdiv{height:2px;background:linear-gradient(to right,var(--blue),var(--gold),var(--blue));
+  border-radius:2px;margin:48px 0;opacity:.3;}
+
+/* BRANDS */
+.brands{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0;}
+.bc{padding:6px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:30px;font-weight:600;font-size:.85rem;color:#fff;transition:all .2s;cursor:default;}
+.bc:hover{background:rgba(254,204,2,.13);border-color:rgba(254,204,2,.38);color:var(--gold);}
+
+/* CITIES */
+.c-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;margin-bottom:30px;}
+.c-city{border-radius:16px;padding:22px 16px;text-align:center;background:var(--gl);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--gb);cursor:pointer;transition:all .2s;}
+.c-city:hover{background:rgba(255,255,255,.1);border-color:rgba(254,204,2,.25);transform:translateY(-3px);}
+.ci-ic{font-size:2rem;margin-bottom:8px;}
+.ci-n{font-weight:700;font-size:.97rem;color:#fff;margin-bottom:2px;}
+.ci-p{font-size:.73rem;color:var(--mt);}
+
+/* ── GALLERY ── */
+.gal-head{position:relative;z-index:1;padding:105px 20px 32px;
+  text-align:center;max-width:700px;margin:0 auto;}
+.gal-grid{display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;padding:0 20px 70px;max-width:1400px;margin:0 auto;}
+.gi{border-radius:16px;overflow:hidden;position:relative;cursor:pointer;
+  aspect-ratio:4/3;contain:layout style paint;}
+.gi.tall{grid-row:span 2;aspect-ratio:auto;}
+.gi.wide{grid-column:span 2;}
+.gi img{width:100%;height:100%;transition:transform .4s ease;}
+.gi:hover img{transform:scale(1.05);}
+.gi-ov{position:absolute;inset:0;background:rgba(3,14,28,0);
+  transition:background .25s;display:flex;align-items:flex-end;padding:16px;}
+.gi:hover .gi-ov{background:rgba(3,14,28,.5);}
+.gi-cap{color:#fff;font-size:.82rem;font-weight:500;opacity:0;
+  transform:translateY(8px);transition:all .25s;}
+.gi:hover .gi-cap{opacity:1;transform:translateY(0);}
+
+/* LIGHTBOX */
+#lb{display:none;position:fixed;inset:0;z-index:9000;
+  background:rgba(0,0,0,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  justify-content:center;align-items:center;}
+#lb.open{display:flex;}
+#lb-img{max-width:90vw;max-height:86vh;border-radius:14px;
+  box-shadow:0 28px 70px rgba(0,0,0,.8);}
+.lb-btn{position:absolute;background:rgba(255,255,255,.1);border:none;
+  color:#fff;font-size:1.3rem;width:46px;height:46px;border-radius:50%;
+  cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;}
+.lb-btn:hover{background:rgba(255,255,255,.2);}
+#lb-cl{top:20px;right:24px;}
+#lb-pv{top:50%;transform:translateY(-50%);left:20px;}
+#lb-nx{top:50%;transform:translateY(-50%);right:20px;}
+#lb-cap{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  color:rgba(255,255,255,.65);font-size:.88rem;}
+
+/* ── BOOKING ── */
+.bk-lay{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;
+  max-width:1260px;margin:0 auto;padding:50px 20px 90px;align-items:start;}
+@media(max-width:860px){.bk-lay{grid-template-columns:1fr;}}
+.bk-h{font-size:clamp(1.8rem,3vw,3rem);color:#fff;margin-bottom:14px;}
+.bk-h span{color:var(--gold);}
+.bk-p{color:var(--mt);line-height:1.78;margin-bottom:24px;font-size:.94rem;}
+.t-opt{display:flex;align-items:center;gap:14px;padding:15px 18px;
+  border-radius:14px;margin-bottom:11px;background:var(--gl);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--gb);cursor:pointer;transition:all .2s;}
+.t-opt:hover{border-color:rgba(254,204,2,.28);background:rgba(254,204,2,.05);}
+.to-ic{font-size:1.7rem;flex-shrink:0;}
+.to-tx h4{font-size:.93rem;color:#fff;margin-bottom:1px;}
+.to-tx p{font-size:.78rem;color:var(--mt);}
+.to-pr{margin-left:auto;font-weight:700;color:var(--gold);font-size:1rem;flex-shrink:0;}
+.f-card{border-radius:24px;padding:38px;background:rgba(255,255,255,.08);
+  backdrop-filter:blur(36px);-webkit-backdrop-filter:blur(36px);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 20px 60px rgba(0,0,0,.45),inset 0 2px 0 rgba(255,255,255,.16);}
+@media(max-width:560px){.f-card{padding:24px 18px;}}
+.f-t{font-size:1.8rem;color:#fff;margin-bottom:4px;}
+.f-s{font-size:.85rem;color:var(--mt);margin-bottom:26px;}
+.fg{margin-bottom:16px;}
+.fl{display:block;font-size:.72rem;font-weight:600;letter-spacing:1.5px;
+  color:var(--mt);text-transform:uppercase;margin-bottom:6px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:440px){.frow{grid-template-columns:1fr;}}
+.fi,.fsel,.fta{width:100%;padding:12px 16px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.11);border-radius:10px;color:#fff;
+  font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s,background .2s;}
+.fi:focus,.fsel:focus,.fta:focus{border-color:rgba(254,204,2,.45);background:rgba(255,255,255,.1);}
+.fi::placeholder,.fta::placeholder{color:rgba(255,255,255,.27);}
+.fsel{cursor:pointer;appearance:none;}
+.fsel option{background:#0a1f35;}
+.fta{min-height:90px;resize:vertical;line-height:1.6;}
+.cbg{display:flex;flex-wrap:wrap;gap:8px;}
+.cbl{display:flex;align-items:center;gap:6px;padding:6px 13px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
+  border-radius:30px;cursor:pointer;font-size:.8rem;color:var(--mt);transition:all .2s;}
+.cbl:hover{background:rgba(254,204,2,.07);border-color:rgba(254,204,2,.22);color:#fff;}
+.cbl.on{background:rgba(254,204,2,.14);border-color:rgba(254,204,2,.45);color:var(--gold);}
+.cbl input{display:none;}
+.btn-sub{width:100%;padding:15px;background:linear-gradient(135deg,var(--gold),var(--g2));
+  border:none;border-radius:12px;color:#000;font-family:'DM Sans',sans-serif;
+  font-size:.95rem;font-weight:700;cursor:pointer;margin-top:6px;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 6px 20px rgba(254,204,2,.35);}
+.btn-sub:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(254,204,2,.55);}
+.ok{display:none;text-align:center;padding:36px 20px;}
+.ok i{font-size:3.2rem;color:#4caf50;margin-bottom:16px;display:block;}
+.ok h3{font-size:1.8rem;color:#fff;margin-bottom:10px;}
+.ok p{color:var(--mt);}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:1;text-align:center;padding:52px 20px;
+  border-top:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.2);}
+.f-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;
+  letter-spacing:5px;background:linear-gradient(135deg,#fff,var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:16px;}
+.f-lnk{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin:12px 0;}
+.f-lnk a{color:var(--mt);font-size:.83rem;text-decoration:none;transition:color .2s;}
+.f-lnk a:hover{color:var(--gold);}
+footer p{color:rgba(255,255,255,.22);font-size:.76rem;margin-top:10px;}
+
+/* ── ANIMATIONS ── */
+@keyframes fup{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease;}
+.rv.v{opacity:1;transform:translateY(0);}
+.rv2{opacity:0;transform:translateY(26px);transition:opacity .6s ease .12s,transform .6s ease .12s;}
+.rv2.v{opacity:1;transform:translateY(0);}
+
+/* MEDIA */
+@media(max-width:860px){
+  #nav{flex-wrap:wrap;padding:9px 14px;}
+  .n-tabs{order:3;width:100%;}
+  .n-cta{order:2;}
+  .n-logo{font-size:1.3rem;}
+  .sstrip{flex-wrap:wrap;}
+  .gal-grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));}
+  .gi.wide{grid-column:span 1;}
+  .gi.tall{grid-row:span 1;aspect-ratio:4/3;}
+}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:rgba(254,204,2,.3);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<div id="bg"><div class="bl b1"></div><div class="bl b2"></div></div>
+
+<!-- LIGHTBOX -->
+<div id="lb">
+  <button class="lb-btn" id="lb-cl" onclick="clLB()"><i class="fas fa-times"></i></button>
+  <button class="lb-btn" id="lb-pv" onclick="lbN(-1)"><i class="fas fa-chevron-left"></i></button>
+  <img id="lb-img" src="" alt="">
+  <button class="lb-btn" id="lb-nx" onclick="lbN(1)"><i class="fas fa-chevron-right"></i></button>
+  <div id="lb-cap"></div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="n-logo" onclick="gp('home')">SVERIGE</div>
+  <div class="n-tabs">
+    <button class="nt on" onclick="gp('home')"><i class="fas fa-home"></i>Головна</button>
+    <button class="nt" onclick="gp('about')"><i class="fas fa-crown"></i>Країна</button>
+    <button class="nt" onclick="gp('nature')"><i class="fas fa-mountain"></i>Природа</button>
+    <button class="nt" onclick="gp('cities')"><i class="fas fa-city"></i>Міста</button>
+    <button class="nt" onclick="gp('food')"><i class="fas fa-utensils"></i>Їжа</button>
+    <button class="nt" onclick="gp('culture')"><i class="fas fa-music"></i>Культура</button>
+    <button class="nt" onclick="gp('innovation')"><i class="fas fa-rocket"></i>Інновації</button>
+    <button class="nt" onclick="gp('gallery')"><i class="fas fa-images"></i>Галерея</button>
+  </div>
+  <button class="n-cta" onclick="gp('booking')"><i class="fas fa-ticket-alt"></i> Екскурсія</button>
+</nav>
+
+<!-- ═══════════ HOME ═══════════ -->
+<div class="pg on" id="p-home">
+  <section class="hero">
+    <span class="h-eye">58°–69° Пн.ш. · Скандинавія · Королівство з 829 р.</span>
+    <h1 class="h-title"><span class="tg">SVERIGE</span><br><span>Королівство</span><br><span class="tg">Мрії</span></h1>
+    <p class="hero-sub">Там, де полярне сяйво освітлює ліси, вікінги стали дизайнерами, а спокій — це мистецтво. Відкрийте Швецію — країну, що змінила світ, не підвищуючи голосу.</p>
+    <div class="btns">
+      <button class="btn-g" onclick="gp('about')"><i class="fas fa-globe-europe"></i> Досліджувати</button>
+      <button class="btn-o" onclick="gp('booking')"><i class="fas fa-map-marked-alt"></i> Забронювати тур</button>
+    </div>
+    <div class="s-hint"><span>ГОРТАТИ</span><i class="fas fa-chevron-down"></i></div>
+  </section>
+
+  <div class="feat-row">
+    <div class="fc glass rv" onclick="gp('nature')"><span class="fc-ic">🌌</span><h3 class="fc-t">Північне сяйво</h3><p class="fc-d">Abisko — одне з найкращих місць планети для Aurora Borealis. Магія, яка змінює людей.</p><span class="fc-a">Природа <i class="fas fa-arrow-right"></i></span></div>
+    <div class="fc glass rv" onclick="gp('culture')"><span class="fc-ic">🎵</span><h3 class="fc-t">Музичний феномен</h3><p class="fc-d">ABBA, Avicii, Spotify — маленька країна, що диктує музичний смак усьому світу.</p><span class="fc-a">Культура <i class="fas fa-arrow-right"></i></span></div>
+    <div class="fc glass rv2" onclick="gp('innovation')"><span class="fc-ic">🚀</span><h3 class="fc-t">Silicon Valley Європи</h3><p class="fc-d">Volvo, IKEA, Minecraft, Klarna. Швеція народжує більше стартапів-єдинорогів, ніж будь-яка інша нація.</p><span class="fc-a">Інновації <i class="fas fa-arrow-right"></i></span></div>
+    <div class="fc glass rv2" onclick="gp('food')"><span class="fc-ic">☕</span><h3 class="fc-t">Fika — мистецтво паузи</h3><p class="fc-d">Шведи перетворили перерву на каву на соціальний інститут і записали її до ДНК нації.</p><span class="fc-a">Гастрономія <i class="fas fa-arrow-right"></i></span></div>
+    <div class="fc glass rv2" onclick="gp('cities')"><span class="fc-ic">🏰</span><h3 class="fc-t">Стокгольм — 14 островів</h3><p class="fc-d">Середньовічний Гамла Стан, сучасний Норрмальм і богемний Седермальм в одному місті.</p><span class="fc-a">Міста <i class="fas fa-arrow-right"></i></span></div>
+    <div class="fc glass rv2" onclick="gp('gallery')"><span class="fc-ic">📷</span><h3 class="fc-t">Галерея краси</h3><p class="fc-d">Фотографії, що передають дух Швеції: від арктичних ландшафтів до вуличних кафе.</p><span class="fc-a">Галерея <i class="fas fa-arrow-right"></i></span></div>
+  </div>
+
+  <div class="wrap">
+    <div class="sstrip rv">
+      <div class="sc"><div class="sn">10.5М</div><div class="sl">Населення</div></div>
+      <div class="sc"><div class="sn">447K</div><div class="sl">Км² площі</div></div>
+      <div class="sc"><div class="sn">221K</div><div class="sl">Озер</div></div>
+      <div class="sc"><div class="sn">#1</div><div class="sl">Інновації ЄС</div></div>
+      <div class="sc"><div class="sn">99%</div><div class="sl">Переробка</div></div>
+      <div class="sc"><div class="sn">200р.</div><div class="sl">Без воєн</div></div>
+    </div>
+
+    <div class="split rv">
+      <div>
+        <span class="sec-lbl">Чому Швеція?</span>
+        <h2 class="sec-t">Країна, яка виглядає як мрія</h2>
+        <p class="sec-b" style="margin-bottom:16px;">Швеція — парадокс: найбільш самотня і найбільш відкрита країна одночасно. Шведи мовчазні, але безмежно гостинні. Сплачують найвищі податки — і вважають це справедливим. Не хваляться успіхом, але результати говорять самі за себе.</p>
+        <p class="sec-b" style="margin-bottom:26px;">Топ-5 найщасливіших країн щороку. Найкраща охорона здоров'я. Найзеленіша економіка. Це не пропаганда — це статистика.</p>
+        <button class="btn-g" onclick="gp('about')" style="font-size:.88rem;padding:12px 26px;"><i class="fas fa-book-open"></i> Дізнатись більше</button>
+      </div>
+      <div class="t-img"><img src="https://images.unsplash.com/photo-1509356843151-3e7d96241e11?auto=format&fit=crop&w=800&q=75" alt="Stockholm" loading="lazy"><div class="t-img-ov"></div></div>
+    </div>
+
+    <div class="split rv" style="margin-bottom:70px;">
+      <div class="t-img" style="order:-1;"><img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=800&q=75" alt="Aurora" loading="lazy"><div class="t-img-ov"></div></div>
+      <div>
+        <span class="sec-lbl">Природа</span>
+        <h2 class="sec-t">63% країни — дикий ліс</h2>
+        <p class="sec-b" style="margin-bottom:16px;">Allemansrätten — унікальний закон: будь-хто може ходити по приватних землях, збирати ягоди і ставити намет. Це не туристична принада — це конституційне право кожного.</p>
+        <p class="sec-b" style="margin-bottom:26px;">221 000 озер, шхерні архіпелаги, арктичні ведмеді та білі ночі. Швеція зберегла дику природу так, як мало хто в Європі.</p>
+        <button class="btn-g" onclick="gp('nature')" style="font-size:.88rem;padding:12px 26px;"><i class="fas fa-tree"></i> Природа Швеції</button>
+      </div>
+    </div>
+
+    <div class="rv"><span class="sec-lbl">Цікаво знати</span><h2 class="sec-t" style="margin-bottom:28px;">Швеція в деталях</h2></div>
+    <div class="qf-grid">
+      <div class="qf glass rv"><span class="qf-ic">🏆</span><div><h4>Батьківщина Нобеля</h4><p>Альфред Нобель — шведський хімік, що винайшов динаміт. Стривожений наслідками, заповів статки на найпрестижнішу наукову премію світу.</p></div></div>
+      <div class="qf glass rv"><span class="qf-ic">🪑</span><div><h4>IKEA та демократія дизайну</h4><p>Інгвар Кампрад заснував IKEA у 17 років, у 1943 р. Ідея: кожен заслуговує на красиве житло. Сьогодні — найбільший меблевий рітейлер світу.</p></div></div>
+      <div class="qf glass rv2"><span class="qf-ic">🛡️</span><div><h4>200 років без воєн</h4><p>Остання війна Швеції — 1814 рік. З того часу суворий нейтралітет, аж до вступу в НАТО у 2024 р.</p></div></div>
+      <div class="qf glass rv2"><span class="qf-ic">♻️</span><div><h4>Швеція імпортує сміття</h4><p>Переробка настільки ефективна, що Швеція імпортує відходи з сусідніх країн для своїх сміттєспалювальних заводів, що виробляють енергію.</p></div></div>
+      <div class="qf glass rv2"><span class="qf-ic">🌞</span><div><h4>Сонце опівночі</h4><p>У Лапландії влітку сонце не заходить тижнями. Шведи влаштовують пікніки та їздять на велосипеді о 2-й ночі — це абсолютно нормально.</p></div></div>
+      <div class="qf glass rv2"><span class="qf-ic">🎮</span><div><h4>Батьківщина Minecraft</h4><p>Маркус Перссон створив Minecraft у Стокгольмі. 238 млн проданих копій — найбільш продавана відеогра в історії.</p></div></div>
+    </div>
+
+    <div class="cta glass rv" style="margin-top:50px;">
+      <h2>Готові поїхати до Швеції? 🇸🇪</h2>
+      <p>Залиште заявку — менеджер підбере ідеальний маршрут та зв'яжеться протягом 24 годин.</p>
+      <button class="btn-g" onclick="gp('booking')" style="margin-right:12px;"><i class="fas fa-paper-plane"></i> Залишити заявку</button>
+      <button class="btn-o" onclick="gp('gallery')"><i class="fas fa-images"></i> Галерея</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<div class="pg" id="p-about">
+  <div class="ih">
+    <div class="ih-bg"><img data-src="https://images.unsplash.com/photo-1509356843151-3e7d96241e11?auto=format&fit=crop&w=1400&q=75" alt="Sweden"></div>
+    <div class="ih-ov"></div>
+    <div class="ih-c"><span class="ih-tag">🇸🇪 Королівство Швеція</span><h1 class="ih-t">Про країну</h1><p class="ih-s">Конституційна монархія, лідер з добробуту та щастя, батьківщина вікінгів і сучасної демократії.</p></div>
+  </div>
+  <div class="ib">
+    <div class="srow rv">
+      <div class="sr-c"><div class="sr-n">1523</div><div class="sr-l">млрд USD ВВП</div></div>
+      <div class="sr-c"><div class="sr-n">#7</div><div class="sr-l">Рівень якості життя</div></div>
+      <div class="sr-c"><div class="sr-n">82</div><div class="sr-l">Роки тривалості życia</div></div>
+      <div class="sr-c"><div class="sr-n">95%</div><div class="sr-l">Рівень грамотності</div></div>
+      <div class="sr-c"><div class="sr-n">SEK</div><div class="sr-l">Крона (не євро)</div></div>
+    </div>
+    <div class="g2 rv">
+      <div>
+        <span class="sec-lbl">Загальна інформація</span>
+        <h2 class="sec-t">Королівство Швеція</h2>
+        <p class="i-b" style="margin-bottom:12px;">Швеція — найбільша країна Скандинавії. Офіційна назва — Konungariket Sverige. Столиця Стокгольм — на 14 островах між озером Меларен та Балтійським морем.</p>
+        <p class="i-b" style="margin-bottom:12px;">Конституційна монархія з 1973 р. Реальна влада — у парламенті (Риксдаг, 349 місць) та уряді. З 1995 — член ЄС. З 2024 — член НАТО.</p>
+        <p class="i-b">Шведська соціальна модель: безкоштовна медицина та освіта, щедрі соціальні виплати, гнучкий ринок праці. Фінансується найвищими в Європі податками (до 57%).</p>
+      </div>
+      <div>
+        <h3 style="font-size:1.5rem;color:#fff;margin-bottom:18px;">Хронологія Швеції</h3>
+        <div class="tl">
+          <div class="tl-i"><div class="tl-y">829 р.</div><div class="tl-t">Перше об'єднання</div><div class="tl-d">Легендарний конунг Бйорн. Початок шведської державності.</div></div>
+          <div class="tl-i"><div class="tl-y">1397 р.</div><div class="tl-t">Кальмарська унія</div><div class="tl-d">Швеція, Данія, Норвегія під однією короною.</div></div>
+          <div class="tl-i"><div class="tl-y">1523 р.</div><div class="tl-t">Незалежність</div><div class="tl-d">Густав Ваза розриває Кальмарську унію.</div></div>
+          <div class="tl-i"><div class="tl-y">1766 р.</div><div class="tl-t">Свобода слова</div><div class="tl-d">Перший у світі закон про свободу преси та інформації.</div></div>
+          <div class="tl-i"><div class="tl-y">1901 р.</div><div class="tl-t">Нобелівська премія</div><div class="tl-d">Перша церемонія в Стокгольмі.</div></div>
+          <div class="tl-i"><div class="tl-y">2024 р.</div><div class="tl-t">НАТО</div><div class="tl-d">Офіційний вступ. Кінець 200-річного нейтралітету.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="fdiv"></div>
+    <div class="info rv">
+      <h3 class="i-t">Lagom — філософія золотої середини</h3>
+      <div class="g2" style="margin:0">
+        <div>
+          <p class="i-b" style="margin-bottom:12px;">"Lagom" — "достатньо, але не надто." Ця концепція пронизує шведське суспільство: від порцій їжі до бізнес-культури. Рівновага, а не крайнощі.</p>
+          <p class="i-b" style="margin-bottom:12px;">Шведи не хваляться успіхом і не применшують досягнення. Пов'язана концепція — Janteloven ("Закон Янте"): суспільний принцип проти зарозумілості.</p>
+          <div class="pq"><p>"Ми не кращі від інших, але ми точно не гірші."</p><cite>— Шведська ментальність</cite></div>
+        </div>
+        <div class="g4" style="margin:0">
+          <div style="text-align:center;padding:18px;background:rgba(254,204,2,.06);border:1px solid rgba(254,204,2,.14);border-radius:14px;"><div style="font-size:1.7rem;margin-bottom:8px;">⚖️</div><div style="font-size:.78rem;color:var(--mt);">Рівновага</div></div>
+          <div style="text-align:center;padding:18px;background:rgba(254,204,2,.06);border:1px solid rgba(254,204,2,.14);border-radius:14px;"><div style="font-size:1.7rem;margin-bottom:8px;">🤝</div><div style="font-size:.78rem;color:var(--mt);">Колектив</div></div>
+          <div style="text-align:center;padding:18px;background:rgba(254,204,2,.06);border:1px solid rgba(254,204,2,.14);border-radius:14px;"><div style="font-size:1.7rem;margin-bottom:8px;">🌱</div><div style="font-size:.78rem;color:var(--mt);">Стійкість</div></div>
+          <div style="text-align:center;padding:18px;background:rgba(254,204,2,.06);border:1px solid rgba(254,204,2,.14);border-radius:14px;"><div style="font-size:1.7rem;margin-bottom:8px;">🕊️</div><div style="font-size:.78rem;color:var(--mt);">Мир</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="acc rv">
+      <div class="ac-item"><div class="ac-h" onclick="tA(this)"><h4><i class="fas fa-landmark"></i>Парламент і політична система</h4><i class="fas fa-chevron-down ac-arr"></i></div><div class="ac-body"><div class="ac-in">Риксдаг — однопалатний парламент, 349 депутатів, вибори кожні 4 роки. Прохідний бар'єр — 4%. Монарх виконує лише церемоніальні функції. Головний принцип — прозорість: будь-який урядовий документ доступний за запитом (закон 1766 р.).</div></div></div>
+      <div class="ac-item"><div class="ac-h" onclick="tA(this)"><h4><i class="fas fa-crown"></i>Монархія та королівська родина</h4><i class="fas fa-chevron-down ac-arr"></i></div><div class="ac-body"><div class="ac-in">Карл XVI Густав — нинішній монарх з 1973 р. Принцеса Вікторія — спадкоємиця трону (закон змінено у 2010 р.: старша дитина незалежно від статі). Резиденція — замок Дроттнінгхольм (ЮНЕСКО).</div></div></div>
+      <div class="ac-item"><div class="ac-h" onclick="tA(this)"><h4><i class="fas fa-shield-alt"></i>Армія та безпека</h4><i class="fas fa-chevron-down ac-arr"></i></div><div class="ac-body"><div class="ac-in">Після 200 років нейтралітету Швеція вступила до НАТО у березні 2024 р. Є обов'язковий призов для чоловіків і жінок. Швеція виробляє власну зброю — зокрема винищувачі Saab Gripen.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ NATURE ═══════════ -->
+<div class="pg" id="p-nature">
+  <div class="ih">
+    <div class="ih-bg"><img data-src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=1400&q=75" alt="Aurora"></div>
+    <div class="ih-ov"></div>
+    <div class="ih-c"><span class="ih-tag">🌿 Природа</span><h1 class="ih-t">Дика Швеція</h1><p class="ih-s">63% країни — ліси. 221 тисяча озер. 29 національних парків. Право вільно гуляти будь-де.</p></div>
+  </div>
+  <div class="ib">
+    <div class="srow rv">
+      <div class="sr-c"><div class="sr-n">221K</div><div class="sr-l">Озер</div></div>
+      <div class="sr-c"><div class="sr-n">221K</div><div class="sr-l">Островів</div></div>
+      <div class="sr-c"><div class="sr-n">63%</div><div class="sr-l">Ліс</div></div>
+      <div class="sr-c"><div class="sr-n">29</div><div class="sr-l">Нац. парків</div></div>
+      <div class="sr-c"><div class="sr-n">300K</div><div class="sr-l">Лосів</div></div>
+    </div>
+    <div class="g3 rv">
+      <div class="card"><div class="c-img"><img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=700&q=75" alt="Aurora" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Лапландія</div><h3 class="c-title">Північне сяйво</h3><p class="c-text">Abisko — одне з найкращих місць планети для Aurora Borealis завдяки унікальному мікроклімату. Підвісна гондола до оглядової станції. Сезон: вересень–березень.</p></div></div>
+      <div class="card"><div class="c-img"><img src="https://images.unsplash.com/photo-1505832018823-50331d70d237?auto=format&fit=crop&w=700&q=75" alt="Archipelago" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Балтика</div><h3 class="c-title">Шхерний архіпелаг</h3><p class="c-text">30 000 островів уздовж узбережжя. Влітку шведи їдуть на острівні будиночки stuga. Поромний транспорт — як маршрутка. Ідеально для каяку та риболовлі.</p></div></div>
+      <div class="card"><div class="c-img"><img src="https://images.unsplash.com/photo-1443926818681-717d074a57af?auto=format&fit=crop&w=700&q=75" alt="Forest" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Ліси</div><h3 class="c-title">Шведські ліси</h3><p class="c-text">Переважно хвойні (сосна та ялина). Тут живуть лосі, рисі, бурі ведмеді та вовки. Збирання ягід — загальнонаціональне хобі.</p></div></div>
+    </div>
+    <div class="info rv">
+      <h3 class="i-t"><i class="fas fa-walking" style="margin-right:10px;"></i>Allemansrätten — Право кожного</h3>
+      <div class="g2" style="margin:0">
+        <div><p class="i-b" style="margin-bottom:12px;">Allemansrätten — унікальний закон, закріплений у конституції. Кожен може вільно переміщатись природою Швеції, включаючи приватні землі. Це не просто закон — це спосіб мислення.</p><p class="i-b">Шведи ростуть з цим правом і глибоко поважають його обов'язки: не залишати сміття, не завдавати шкоди природі та власності.</p></div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <div style="display:flex;gap:9px;align-items:flex-start;font-size:.88rem;"><i class="fas fa-check" style="color:#4caf50;margin-top:3px;flex-shrink:0;"></i><span style="color:var(--mt);">Гуляти лісами та полями, включаючи приватні землі</span></div>
+          <div style="display:flex;gap:9px;align-items:flex-start;font-size:.88rem;"><i class="fas fa-check" style="color:#4caf50;margin-top:3px;flex-shrink:0;"></i><span style="color:var(--mt);">Таборувати до 2 ночей на одному місці</span></div>
+          <div style="display:flex;gap:9px;align-items:flex-start;font-size:.88rem;"><i class="fas fa-check" style="color:#4caf50;margin-top:3px;flex-shrink:0;"></i><span style="color:var(--mt);">Збирати ягоди, гриби, горіхи та квіти</span></div>
+          <div style="display:flex;gap:9px;align-items:flex-start;font-size:.88rem;"><i class="fas fa-check" style="color:#4caf50;margin-top:3px;flex-shrink:0;"></i><span style="color:var(--mt);">Плавати та рибалити у відкритих водоймах</span></div>
+          <div style="display:flex;gap:9px;align-items:flex-start;font-size:.88rem;"><i class="fas fa-times" style="color:#f44336;margin-top:3px;flex-shrink:0;"></i><span style="color:var(--mt);">Не можна ближче 70 м до жилих будинків</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="g2 rv">
+      <div class="p-card"><span class="pc-ic">❄️</span><div class="c-tag">Лапландія</div><h3 class="c-title" style="margin-bottom:8px;">Icehotel</h3><p class="c-text">Готель у Юккасярві повністю зі льоду та снігу, щороку перебудовується заново. Кімнати оформлюють художники з усього світу. Температура в номері: -5°C.</p></div>
+      <div class="p-card"><span class="pc-ic">☀️</span><div class="c-tag">Явище</div><h3 class="c-title" style="margin-bottom:8px;">Полярний день</h3><p class="c-text">На північ від Полярного кола влітку сонце не заходить тижнями. Шведи влаштовують пікніки о 2 ночі, купаються і їздять на велосипеді — це абсолютно нормально.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CITIES ═══════════ -->
+<div class="pg" id="p-cities">
+  <div class="ih">
+    <div class="ih-bg"><img data-src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1400&q=75" alt="Gothenburg"></div>
+    <div class="ih-ov"></div>
+    <div class="ih-c"><span class="ih-tag">🏙️ Міста</span><h1 class="ih-t">Міста Швеції</h1><p class="ih-s">Від середньовічного Гамла Стана до хіпстерського Гетеборгу — кожне місто має свою душу.</p></div>
+  </div>
+  <div class="ib">
+    <div class="c-row rv">
+      <div class="c-city"><div class="ci-ic">🏰</div><div class="ci-n">Стокгольм</div><div class="ci-p">975 000 · Столиця</div></div>
+      <div class="c-city"><div class="ci-ic">⚓</div><div class="ci-n">Гетеборг</div><div class="ci-p">590 000 · Порт</div></div>
+      <div class="c-city"><div class="ci-ic">🌉</div><div class="ci-n">Мальме</div><div class="ci-p">354 000 · Міст</div></div>
+      <div class="c-city"><div class="ci-ic">🎓</div><div class="ci-n">Уппсала</div><div class="ci-p">236 000 · Університет</div></div>
+      <div class="c-city"><div class="ci-ic">❄️</div><div class="ci-n">Умеа</div><div class="ci-p">132 000 · Молодь</div></div>
+      <div class="c-city"><div class="ci-ic">🦌</div><div class="ci-n">Кіруна</div><div class="ci-p">18 000 · Арктика</div></div>
+      <div class="c-city"><div class="ci-ic">🏝️</div><div class="ci-n">Вісбю</div><div class="ci-p">24 000 · ЮНЕСКО</div></div>
+    </div>
+    <div class="g2 rv">
+      <div class="card"><div class="c-img" style="height:250px;"><img src="https://images.unsplash.com/photo-1509356843151-3e7d96241e11?auto=format&fit=crop&w=800&q=75" alt="Stockholm" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Столиця · 14 островів</div><h3 class="c-title">Стокгольм</h3><p class="c-text">Гамла Стан — середньовічне серце міста (1252 р.). Королівський палац Дроттнінгхольм. Музей корабля Васа (XVII ст.). Сучасний Норрмальм. Богемний Седермальм з вінтажними крамницями.</p></div></div>
+      <div class="card"><div class="c-img" style="height:250px;"><img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=800&q=75" alt="Gothenburg" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Друге місто · Порт</div><h3 class="c-title">Гетеборг</h3><p class="c-text">Місто каналів і трамваїв. Гетеборжці — найвідвертіші шведи. Liseberg — найпопулярніший парк розваг Скандинавії. Район Хага — старовинні будинки й кафе з велетенськими булочками.</p></div></div>
+    </div>
+    <div class="info rv">
+      <h3 class="i-t">Стокгольм по кварталах</h3>
+      <div class="acc" style="margin:0">
+        <div class="ac-item"><div class="ac-h" onclick="tA(this)"><h4><i class="fas fa-chess-rook"></i>Gamla Stan — Старе місто</h4><i class="fas fa-chevron-down ac-arr"></i></div><div class="ac-body"><div class="ac-in">Засновано 1252 р. Середньовічні вулиці, жодного сучасного будинку. Королівський палац (607 кімнат), Ратуша з Нобелівським банкетом, найвужча вулиця Mårten Trotzigs gränd — 90 см.</div></div></div>
+        <div class="ac-item"><div class="ac-h" onclick="tA(this)"><h4><i class="fas fa-university"></i>Östermalm — Аристократичний квартал</h4><i class="fas fa-chevron-down ac-arr"></i></div><div class="ac-body"><div class="ac-in">Найбагатший район. Широкі бульвари, дорогі ресторани. Östermalms Saluhall — накритий ринок 1888 р., найкращий делікатесний ринок Скандинавії.</div></div></div>
+        <div class="ac-item"><div class="ac-h" onclick="tA(this)"><h4><i class="fas fa-paint-brush"></i>Södermalm — Богемний острів</h4><i class="fas fa-chevron-down ac-arr"></i></div><div class="ac-body"><div class="ac-in">Район художників і кав'ярень. Тут жила Лісбет Саландер зі Стіга Ларссона. SoFo — найхіпстерніша вулиця міста. Moseback Torg — вид на Гамла Стан.</div></div></div>
+        <div class="ac-item"><div class="ac-h" onclick="tA(this)"><h4><i class="fas fa-leaf"></i>Djurgården — Острів парків</h4><i class="fas fa-chevron-down ac-arr"></i></div><div class="ac-body"><div class="ac-in">Колишнє королівство мисливське угіддя. Музей Васа (корабель 1628 р.), Скансен (перший у світі музей просто неба, 1891 р.), музей ABBA, Юнібаккен (Астрід Ліндгрен).</div></div></div>
+      </div>
+    </div>
+    <div class="p-card rv"><span class="pc-ic">🏔️</span><h3 class="c-title" style="margin-bottom:8px;">Кіруна — місто, яке переїхало</h3><p class="c-text" style="margin-bottom:10px;">Ціле місто переноситься на 3 км на схід — бо залізорудна шахта (найбільша у світі) поглинає землю під будинками. З 2015 по 2035 рік переносять тисячі будівель, включаючи церкву 1912 р.</p><p class="c-text">Це перша цілеспрямована міграція цілого міста в сучасну еру.</p></div>
+  </div>
+</div>
+
+<!-- ═══════════ FOOD ═══════════ -->
+<div class="pg" id="p-food">
+  <div class="ih">
+    <div class="ih-bg"><img data-src="https://images.unsplash.com/photo-1529193591184-b1d580690dd0?auto=format&fit=crop&w=1400&q=75" alt="Food"></div>
+    <div class="ih-ov"></div>
+    <div class="ih-c"><span class="ih-tag">🍽️ Гастрономія</span><h1 class="ih-t">Смаки Швеції</h1><p class="ih-s">Від фрикадельок IKEA до мішленівських ресторанів. Простота, сезонність і незвичні поєднання.</p></div>
+  </div>
+  <div class="ib">
+    <div class="g3 rv">
+      <div class="card"><div class="c-img"><img src="https://images.unsplash.com/photo-1529193591184-b1d580690dd0?auto=format&fit=crop&w=700&q=75" alt="Köttbullar" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Іконічна страва</div><h3 class="c-title">Köttbullar</h3><p class="c-text">Легендарні шведські фрикадельки. Подаються з картопляним пюре, вершковим соусом та брусничним джемом. Рецепт з'явився у XVII ст. Прославлені по всьому світу завдяки IKEA.</p></div></div>
+      <div class="card"><div class="c-img"><img src="https://images.unsplash.com/photo-1605333145025-0e8a719c8032?auto=format&fit=crop&w=700&q=75" alt="Kanelbullar" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Ритуал</div><h3 class="c-title">Kanelbullar</h3><p class="c-text">Святиня шведської кухні. 4 жовтня — Національний день Kanelbullar. Без них неможлива жодна Fika. Менш солодка і більша за американський аналог. Ідеальна з чорною кавою.</p></div></div>
+      <div class="card"><div class="c-img"><img src="https://images.unsplash.com/photo-1517244683847-7456b63c5969?auto=format&fit=crop&w=700&q=75" alt="Herring" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Традиція</div><h3 class="c-title">Sill (Оселедець)</h3><p class="c-text">Маринований у 30+ варіантах: гірчиця, цибуля, матьє, медова глазур. Обов'язковий на Midsommar. Їдять на хлібці з вареною картоплею і сметаною.</p></div></div>
+    </div>
+    <div class="info rv">
+      <h3 class="i-t">☕ Fika — не просто кава</h3>
+      <div class="g2" style="margin:0">
+        <div>
+          <p class="i-b" style="margin-bottom:12px;">Fika — шведський ритуал спільного вживання кави та солодощів. Але це набагато більше. Це соціальний інститут, спосіб уповільнитися, поспілкуватися, побути разом.</p>
+          <p class="i-b" style="margin-bottom:12px;">На роботі Fika — двічі на день (о 10:00 і 15:00). Пропустити колективну Fika — майже образа колег. Великі компанії офіційно вносять її до розкладу.</p>
+          <p class="i-b">Швеція — 3-тя у світі за споживанням кави (понад 8 кг на людину на рік). Кавова культура надзвичайно розвинена: десятки незалежних обсмажувачів.</p>
+          <div class="pq"><p>"Fika — це про час, а не про каву."</p><cite>— Шведська мудрість</cite></div>
+        </div>
+        <div class="g4" style="margin:0">
+          <div style="text-align:center;padding:18px;background:rgba(254,204,2,.06);border:1px solid rgba(254,204,2,.14);border-radius:14px;"><div style="font-size:1.7rem;margin-bottom:7px;">☕</div><div style="font-size:.76rem;color:var(--mt);">Кава або чай</div></div>
+          <div style="text-align:center;padding:18px;background:rgba(254,204,2,.06);border:1px solid rgba(254,204,2,.14);border-radius:14px;"><div style="font-size:1.7rem;margin-bottom:7px;">🥐</div><div style="font-size:.76rem;color:var(--mt);">Булочки</div></div>
+          <div style="text-align:center;padding:18px;background:rgba(254,204,2,.06);border:1px solid rgba(254,204,2,.14);border-radius:14px;"><div style="font-size:1.7rem;margin-bottom:7px;">👥</div><div style="font-size:.76rem;color:var(--mt);">Спілкування</div></div>
+          <div style="text-align:center;padding:18px;background:rgba(254,204,2,.06);border:1px solid rgba(254,204,2,.14);border-radius:14px;"><div style="font-size:1.7rem;margin-bottom:7px;">⏸️</div><div style="font-size:.76rem;color:var(--mt);">Пауза</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="g3 rv">
+      <div class="p-card"><span class="pc-ic">🦐</span><div class="c-tag">Делікатес</div><h3 class="c-title" style="margin-bottom:7px;">Räkor (Креветки)</h3><p class="c-text">Шведи споживають 20 000+ т креветок на рік. Гетеборзькі — найкращі. Свіжі, дрібні, з шкаралупою. Хліб, майонез, лимон, кріп.</p></div>
+      <div class="p-card"><span class="pc-ic">🫙</span><div class="c-tag">Виклик</div><h3 class="c-title" style="margin-bottom:7px;">Surströmming</h3><p class="c-text">Квашений оселедець — одна з найсмердючіших страв світу. Відкривати тільки на вулиці. Їдять з tunnbröd, сирою цибулею, картоплею та сметаною. Авіакомпанії забороняють перевозити.</p></div>
+      <div class="p-card"><span class="pc-ic">🍓</span><div class="c-tag">Сезонне</div><h3 class="c-title" style="margin-bottom:7px;">Ягоди Швеції</h3><p class="c-text">Чорниця, лохвиця, морошка. Збирання — загальнонаціональне хобі (Allemansrätten). Lingonsylt (брусничний джем) — до фрикадельок, млинців і просто на хліб.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CULTURE ═══════════ -->
+<div class="pg" id="p-culture">
+  <div class="ih">
+    <div class="ih-bg"><img data-src="https://images.unsplash.com/photo-1472653816316-3ad6f10a6592?auto=format&fit=crop&w=1400&q=75" alt="Midsommar"></div>
+    <div class="ih-ov"></div>
+    <div class="ih-c"><span class="ih-tag">🎭 Культура</span><h1 class="ih-t">Душа Швеції</h1><p class="ih-s">ABBA і Авічі, Астрід Ліндгрен і Нобель. Від вікінгських рун до Spotify.</p></div>
+  </div>
+  <div class="ib">
+    <div class="g3 rv">
+      <div class="card"><div class="c-img"><img src="https://images.unsplash.com/photo-1472653816316-3ad6f10a6592?auto=format&fit=crop&w=700&q=75" alt="Midsommar" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Головне свято</div><h3 class="c-title">Midsommar</h3><p class="c-text">Найважливіше свято після Різдва. Шведи плетуть вінки, танцюють навколо midsommarstång, п'ють шнапс і їдять оселедець. Більшість проводить на острові або на природі.</p></div></div>
+      <div class="card"><div class="c-img"><img src="https://images.unsplash.com/photo-1516280440614-6697288d5d38?auto=format&fit=crop&w=700&q=75" alt="Music" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Феномен</div><h3 class="c-title">Шведська музика</h3><p class="c-text">ABBA, Roxette, Avicii, Robyn, Zara Larsson. Швеція — 3-я у світі за музичним експортом. Стокгольм — 2-е місце після Лос-Анджелеса за хітами-мільярдерами Spotify.</p></div></div>
+      <div class="card"><div class="c-img"><img src="https://images.unsplash.com/photo-1543324545-0985223232c1?auto=format&fit=crop&w=700&q=75" alt="Design" loading="lazy"><div class="c-ov"></div></div><div class="c-body"><div class="c-tag">Дизайн</div><h3 class="c-title">Шведський дизайн</h3><p class="c-text">Функціональність + краса + доступність. IKEA демократизувала дизайн для всього світу. Acne Studios, Filippa K, COS — шведська мода відома мінімалізмом і якістю.</p></div></div>
+    </div>
+    <div class="info rv">
+      <h3 class="i-t">🏆 Нобелівська премія</h3>
+      <div class="g2" style="margin:0">
+        <div>
+          <p class="i-b" style="margin-bottom:12px;">Альфред Нобель (1833–1896) — шведський хімік, що винайшов динаміт. Стривожений тим, що його відкриття використовується для вбивств, заповів весь статок на заснування премій.</p>
+          <p class="i-b" style="margin-bottom:12px;">Перші Нобелівські премії вручені у 1901 р. Щороку 10 грудня — у день смерті Нобеля — лауреати отримують медалі в Стокгольмській концертній залі. Потім — банкет у Ратуші на 1300 гостей.</p>
+          <p class="i-b">6 категорій: фізика, хімія, медицина, литература, мир (Осло), економіка. Нагорода 2024 р. — 11 млн шведських крон.</p>
+        </div>
+        <div class="g4" style="margin:0">
+          <div style="text-align:center;padding:20px;background:var(--gl);border:1px solid var(--gb);border-radius:14px;"><div class="sr-n" style="font-size:2.2rem;">6</div><div class="sr-l">Категорій</div></div>
+          <div style="text-align:center;padding:20px;background:var(--gl);border:1px solid var(--gb);border-radius:14px;"><div class="sr-n" style="font-size:2.2rem;">970+</div><div class="sr-l">Лауреатів</div></div>
+          <div style="text-align:center;padding:20px;background:var(--gl);border:1px solid var(--gb);border-radius:14px;"><div class="sr-n" style="font-size:2.2rem;">1901</div><div class="sr-l">Перша церемонія</div></div>
+          <div style="text-align:center;padding:20px;background:var(--gl);border:1px solid var(--gb);border-radius:14px;"><div class="sr-n" style="font-size:2.2rem;">11M</div><div class="sr-l">SEK 2024</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="g2 rv">
+      <div class="p-card"><span class="pc-ic">📚</span><div class="c-tag">Литература</div><h3 class="c-title" style="margin-bottom:8px;">Шведська литература</h3><p class="c-text">Астрід Ліндгрен — Пеппі та Карлсон у 100+ країнах. Стіг Ларссон — "Дівчина з татуюванням дракона" — один з найбільш продаваних романів XXI ст. Сельма Лагерлеф — перша жінка з Нобелівською премією з литератури (1909).</p></div>
+      <div class="p-card"><span class="pc-ic">🎄</span><div class="c-tag">Традиції</div><h3 class="c-title" style="margin-bottom:8px;">Різдво по-шведськи</h3><p class="c-text">Jul — шведське Різдво. Julbord — різдвяний стіл зі smörgåsbord. Tomte — шведський Санта. 13 грудня — день Святої Люції: дівчата у білих сукнях зі свічками на голові. Глог та луссекати — обов'язкові.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ INNOVATION ═══════════ -->
+<div class="pg" id="p-innovation">
+  <div class="ih">
+    <div class="ih-bg"><img data-src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1400&q=75" alt="Tech"></div>
+    <div class="ih-ov"></div>
+    <div class="ih-c"><span class="ih-tag">🚀 Інновації</span><h1 class="ih-t">Швеція змінює світ</h1><p class="ih-s">Найбільше стартапів-єдинорогів на душу населення після Кремнієвої долини.</p></div>
+  </div>
+  <div class="ib">
+    <div class="srow rv">
+      <div class="sr-c"><div class="sr-n">#1</div><div class="sr-l">Інновації ЄС</div></div>
+      <div class="sr-c"><div class="sr-n">5</div><div class="sr-l">Єдинорогів на 1М</div></div>
+      <div class="sr-c"><div class="sr-n">99%</div><div class="sr-l">Переробка</div></div>
+      <div class="sr-c"><div class="sr-n">3.5%</div><div class="sr-l">ВВП на R&D</div></div>
+      <div class="sr-c"><div class="sr-n">2045</div><div class="sr-l">Нульові викиди</div></div>
+    </div>
+    <div class="info rv">
+      <h3 class="i-t">🏭 Шведські бренди, що підкорили світ</h3>
+      <div class="brands">
+        <div class="bc">🚗 Volvo</div><div class="bc">🛋️ IKEA</div><div class="bc">🎵 Spotify</div><div class="bc">👗 H&M</div><div class="bc">📡 Ericsson</div><div class="bc">☎️ Skype</div><div class="bc">⛏️ Minecraft</div><div class="bc">🔋 Northvolt</div><div class="bc">👗 Acne Studios</div><div class="bc">💳 Klarna</div><div class="bc">🎮 King (Candy Crush)</div><div class="bc">🛒 Oatly</div><div class="bc">🍺 Absolut Vodka</div><div class="bc">✈️ Saab Gripen</div>
+      </div>
+    </div>
+    <div class="g3 rv">
+      <div class="p-card"><span class="pc-ic">🚗</span><div class="c-tag">Безпека</div><h3 class="c-title" style="margin-bottom:7px;">Volvo та ремінь безпеки</h3><p class="c-text">1959 р. Нільс Болін винайшов триточковий ремінь. Volvo передала патент усій індустрії безкоштовно. "Безпека важливіша за прибуток." Понад 1 мільйон врятованих życia.</p></div>
+      <div class="p-card"><span class="pc-ic">🎵</span><div class="c-tag">Технологія</div><h3 class="c-title" style="margin-bottom:7px;">Spotify</h3><p class="c-text">Даніель Ек заснував Spotify у Стокгольмі у 2006 р. Сьогодні: 600 млн користувачів, 240 млн платників. Повністю змінив музичну індустрію.</p></div>
+      <div class="p-card"><span class="pc-ic">🔋</span><div class="c-tag">Зелена енергетика</div><h3 class="c-title" style="margin-bottom:7px;">Northvolt</h3><p class="c-text">Шведський стартап, що будує найбільші в Європі заводи акумуляторів для електромобілів Volkswagen, BMW та інших. Залучили $15 млрд інвестицій.</p></div>
+    </div>
+    <div class="info rv">
+      <h3 class="i-t">💡 Чому Стокгольм — Silicon Valley Європи?</h3>
+      <p class="i-b" style="margin-bottom:18px;">Після Кремнієвої долини Стокгольм є найщільнішим осередком стартапів-єдинорогів у світі. Формула успіху:</p>
+      <div class="g4" style="margin:0">
+        <div style="text-align:center;padding:20px;background:rgba(254,204,2,.05);border:1px solid rgba(254,204,2,.12);border-radius:14px;"><div style="font-size:1.9rem;margin-bottom:8px;">🎓</div><div style="font-weight:600;color:#fff;margin-bottom:5px;font-size:.95rem;">Освіта</div><div style="font-size:.78rem;color:var(--mt);">Безкоштовна університетська освіта. KTH — топ технічна школа Європи.</div></div>
+        <div style="text-align:center;padding:20px;background:rgba(254,204,2,.05);border:1px solid rgba(254,204,2,.12);border-radius:14px;"><div style="font-size:1.9rem;margin-bottom:8px;">💰</div><div style="font-weight:600;color:#fff;margin-bottom:5px;font-size:.95rem;">Підтримка</div><div style="font-size:.78rem;color:var(--mt);">3.5% ВВП на R&D. Державні гранти для стартапів.</div></div>
+        <div style="text-align:center;padding:20px;background:rgba(254,204,2,.05);border:1px solid rgba(254,204,2,.12);border-radius:14px;"><div style="font-size:1.9rem;margin-bottom:8px;">🤝</div><div style="font-weight:600;color:#fff;margin-bottom:5px;font-size:.95rem;">Культура</div><div style="font-size:.78rem;color:var(--mt);">Горизонтальні компанії. Рівноправ'я. Відкритість до ризику.</div></div>
+        <div style="text-align:center;padding:20px;background:rgba(254,204,2,.05);border:1px solid rgba(254,204,2,.12);border-radius:14px;"><div style="font-size:1.9rem;margin-bottom:8px;">🌐</div><div style="font-weight:600;color:#fff;margin-bottom:5px;font-size:.95rem;">Інтернет</div><div style="font-size:.78rem;color:var(--mt);">98% охоплення. Одна з найдиджиталізованіших країн.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ GALLERY ═══════════ -->
+<div class="pg" id="p-gallery">
+  <div class="gal-head">
+    <span class="sec-lbl">📷 Галерея</span>
+    <h2 class="sec-t" style="font-size:clamp(2.2rem,4.5vw,4rem);margin-bottom:10px;">Швеція у кадрі</h2>
+    <p style="color:var(--mt);line-height:1.65;font-size:.9rem;">Клікніть на фото для перегляду у повному розмірі. Стрілки або клавіатура для навігації.</p>
+  </div>
+  <div class="gal-grid">
+    <div class="gi tall" onclick="oLB(0)"><img src="https://images.unsplash.com/photo-1509356843151-3e7d96241e11?auto=format&fit=crop&w=600&q=70" alt="Stockholm" loading="lazy"><div class="gi-ov"><span class="gi-cap">🏰 Стокгольм на розсвіті</span></div></div>
+    <div class="gi" onclick="oLB(1)"><img src="https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=600&q=70" alt="Aurora" loading="lazy"><div class="gi-ov"><span class="gi-cap">🌌 Aurora Borealis</span></div></div>
+    <div class="gi" onclick="oLB(2)"><img src="https://images.unsplash.com/photo-1505832018823-50331d70d237?auto=format&fit=crop&w=600&q=70" alt="Archipelago" loading="lazy"><div class="gi-ov"><span class="gi-cap">🌊 Архіпелаг</span></div></div>
+    <div class="gi wide" onclick="oLB(3)"><img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=70" alt="Gothenburg" loading="lazy"><div class="gi-ov"><span class="gi-cap">⚓ Гетеборг, набережна</span></div></div>
+    <div class="gi" onclick="oLB(4)"><img src="https://images.unsplash.com/photo-1443926818681-717d074a57af?auto=format&fit=crop&w=600&q=70" alt="Forest" loading="lazy"><div class="gi-ov"><span class="gi-cap">🌲 Ліс восени</span></div></div>
+    <div class="gi tall" onclick="oLB(5)"><img src="https://images.unsplash.com/photo-1472653816316-3ad6f10a6592?auto=format&fit=crop&w=600&q=70" alt="Midsommar" loading="lazy"><div class="gi-ov"><span class="gi-cap">🌸 Midsommar</span></div></div>
+    <div class="gi" onclick="oLB(6)"><img src="https://images.unsplash.com/photo-1596541223130-5d31a73fb6c6?auto=format&fit=crop&w=600&q=70" alt="Village" loading="lazy"><div class="gi-ov"><span class="gi-cap">🏡 Шведське село</span></div></div>
+    <div class="gi" onclick="oLB(7)"><img src="https://images.unsplash.com/photo-1543324545-0985223232c1?auto=format&fit=crop&w=600&q=70" alt="Cafe" loading="lazy"><div class="gi-ov"><span class="gi-cap">☕ Fika</span></div></div>
+    <div class="gi" onclick="oLB(8)"><img src="https://images.unsplash.com/photo-1529193591184-b1d580690dd0?auto=format&fit=crop&w=600&q=70" alt="Food" loading="lazy"><div class="gi-ov"><span class="gi-cap">🍽️ Köttbullar</span></div></div>
+    <div class="gi wide" onclick="oLB(9)"><img src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?auto=format&fit=crop&w=900&q=70" alt="Design" loading="lazy"><div class="gi-ov"><span class="gi-cap">🎨 Шведський дизайн</span></div></div>
+    <div class="gi" onclick="oLB(10)"><img src="https://images.unsplash.com/photo-1504700610630-ac6aba3536d3?auto=format&fit=crop&w=600&q=70" alt="Midnight sun" loading="lazy"><div class="gi-ov"><span class="gi-cap">☀️ Полярний день</span></div></div>
+    <div class="gi" onclick="oLB(11)"><img src="https://images.unsplash.com/photo-1605333145025-0e8a719c8032?auto=format&fit=crop&w=600&q=70" alt="Kanelbullar" loading="lazy"><div class="gi-ov"><span class="gi-cap">🥐 Kanelbullar</span></div></div>
+  </div>
+  <div style="text-align:center;padding:0 0 70px;position:relative;z-index:1;">
+    <button class="btn-g" onclick="gp('booking')"><i class="fas fa-ticket-alt"></i> Забронювати екскурсію</button>
+  </div>
+</div>
+
+<!-- ═══════════ BOOKING ═══════════ -->
+<div class="pg" id="p-booking">
+  <div style="position:relative;z-index:1;padding:105px 20px 0;text-align:center;max-width:700px;margin:0 auto;">
+    <span class="sec-lbl">📋 Екскурсії</span>
+    <h2 class="sec-t" style="font-size:clamp(2rem,4vw,3.6rem);margin-bottom:12px;">Забронювати тур до Швеції</h2>
+    <p style="color:var(--mt);line-height:1.7;font-size:.93rem;">Залиште заявку — ми зв'яжемось протягом 24 годин та підберемо ідеальний маршрут.</p>
+  </div>
+  <div class="bk-lay">
+    <div>
+      <h2 class="bk-h">Ваша подорож до <span>Швеції</span> починається тут</h2>
+      <p class="bk-p">Досвідчені гіди, комфортне розміщення, перевірені маршрути. 7–21 день. Для індивідуалів, пар та груп.</p>
+      <div class="t-opt"><span class="to-ic">🏰</span><div class="to-tx"><h4>Класичний Стокгольм</h4><p>7 днів · Гамла Стан, музеї, архіпелаг</p></div><span class="to-pr">від 1 200€</span></div>
+      <div class="t-opt"><span class="to-ic">❄️</span><div class="to-tx"><h4>Лапландська казка</h4><p>10 днів · Aurora, олені, Icehotel</p></div><span class="to-pr">від 2 400€</span></div>
+      <div class="t-opt"><span class="to-ic">🌿</span><div class="to-tx"><h4>Зелена Швеція</h4><p>14 днів · Ліси, острови, велотури</p></div><span class="to-pr">від 1 800€</span></div>
+      <div class="t-opt"><span class="to-ic">🏙️</span><div class="to-tx"><h4>Три міста</h4><p>10 днів · Стокгольм, Гетеборг, Мальме</p></div><span class="to-pr">від 1 600€</span></div>
+      <div class="t-opt"><span class="to-ic">🎄</span><div class="to-tx"><h4>Різдво у Швеції</h4><p>5 днів · Ринки, глог, Julbord</p></div><span class="to-pr">від 980€</span></div>
+      <div class="t-opt"><span class="to-ic">🎨</span><div class="to-tx"><h4>Індивідуальний маршрут</h4><p>7–21 день · Ваші побажання</p></div><span class="to-pr">за запитом</span></div>
+    </div>
+    <div class="f-card">
+      <div id="bk-f">
+        <h3 class="f-t">Залишити заявку</h3>
+        <p class="f-s">Поля зі * обов'язкові</p>
+        <div class="frow">
+          <div class="fg"><label class="fl">Ім'я *</label><input class="fi" id="fn" type="text" placeholder="Ваше ім'я"></div>
+          <div class="fg"><label class="fl">Прізвище</label><input class="fi" id="fln" type="text" placeholder="Прізвище"></div>
+        </div>
+        <div class="frow">
+          <div class="fg"><label class="fl">Email *</label><input class="fi" id="fe" type="email" placeholder="your@email.com"></div>
+          <div class="fg"><label class="fl">Телефон</label><input class="fi" id="fp" type="tel" placeholder="+380 00 000 0000"></div>
+        </div>
+        <div class="fg"><label class="fl">Тур *</label><select class="fsel" id="ft"><option value="">Оберіть тур...</option><option>Класичний Стокгольм (7 днів)</option><option>Лапландська казка (10 днів)</option><option>Зелена Швеція (14 днів)</option><option>Три міста (10 днів)</option><option>Різдво у Швеції (5 днів)</option><option>Індивідуальний маршрут</option></select></div>
+        <div class="frow">
+          <div class="fg"><label class="fl">Дата виїзду</label><input class="fi" id="fd" type="date"></div>
+          <div class="fg"><label class="fl">Учасників</label><select class="fsel"><option>1 особа</option><option>2 особи</option><option>3–4 особи</option><option>5–8 осіб</option><option>Група 9+</option></select></div>
+        </div>
+        <div class="fg"><label class="fl">Що цікавить?</label>
+          <div class="cbg">
+            <label class="cbl" onclick="tcb(this)"><input type="checkbox">🏛️ Культура</label>
+            <label class="cbl" onclick="tcb(this)"><input type="checkbox">🌲 Природа</label>
+            <label class="cbl" onclick="tcb(this)"><input type="checkbox">❄️ Зима</label>
+            <label class="cbl" onclick="tcb(this)"><input type="checkbox">🍽️ Їжа</label>
+            <label class="cbl" onclick="tcb(this)"><input type="checkbox">🚴 Активний</label>
+            <label class="cbl" onclick="tcb(this)"><input type="checkbox">🎨 Дизайн</label>
+          </div>
+        </div>
+        <div class="fg"><label class="fl">Побажання</label><textarea class="fta" id="fm" placeholder="Очікування, бюджет, особливі запити..."></textarea></div>
+        <button class="btn-sub" onclick="sbm()"><i class="fas fa-paper-plane"></i> &nbsp;Надіслати заявку</button>
+      </div>
+      <div class="ok" id="bk-ok">
+        <i class="fas fa-check-circle"></i>
+        <h3>Заявку отримано!</h3>
+        <p>Менеджер зв'яжеться протягом 24 годин та підбере найкращий маршрут.<br><br><strong style="color:var(--gold);">Välkommen till Sverige! 🇸🇪</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="f-logo">SVERIGE</div>
+  <div class="f-lnk">
+    <a href="#" onclick="gp('home');return false;">Головна</a>
+    <a href="#" onclick="gp('about');return false;">Країна</a>
+    <a href="#" onclick="gp('nature');return false;">Природа</a>
+    <a href="#" onclick="gp('cities');return false;">Міста</a>
+    <a href="#" onclick="gp('food');return false;">Їжа</a>
+    <a href="#" onclick="gp('culture');return false;">Культура</a>
+    <a href="#" onclick="gp('innovation');return false;">Інновації</a>
+    <a href="#" onclick="gp('gallery');return false;">Галерея</a>
+    <a href="#" onclick="gp('booking');return false;">Екскурсії</a>
+  </div>
+  <p>🇸🇪 Sverige — Королівство Швеція · Välkommen!</p>
+  <p style="margin-top:4px;">© 2025 Sverige Tourism</p>
+</footer>
+
+<script>
+// ── PAGES ──
+const PGS=['home','about','nature','cities','food','culture','innovation','gallery','booking'];
+function gp(n){
+  PGS.forEach(p=>{
+    document.getElementById('p-'+p).classList.remove('on');
+  });
+  document.querySelectorAll('.nt').forEach(b=>b.classList.remove('on'));
+  const pg=document.getElementById('p-'+n);
+  pg.classList.add('on');
+  // activate nav btn
+  document.querySelectorAll('.nt').forEach(b=>{
+    if((b.getAttribute('onclick')||'').includes("'"+n+"'"))b.classList.add('on');
+  });
+  // lazy load hero image
+  const ih=pg.querySelector('.ih-bg img[data-src]');
+  if(ih&&!ih.src){ih.src=ih.dataset.src;ih.onload=()=>ih.classList.add('loaded');}
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(rv,100);
+}
+
+// ── NAV SCROLL ──
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50),{passive:true});
+
+// ── ACCORDION ──
+function tA(h){
+  const it=h.parentElement,bd=it.querySelector('.ac-body'),op=it.classList.contains('open');
+  document.querySelectorAll('.ac-item.open').forEach(i=>{
+    i.classList.remove('open');i.querySelector('.ac-body').style.maxHeight='0';});
+  if(!op){it.classList.add('open');bd.style.maxHeight=bd.scrollHeight+200+'px';}
+}
+
+// ── CHECKBOX ──
+function tcb(l){setTimeout(()=>l.classList.toggle('on',l.querySelector('input').checked),0);}
+
+// ── FORM ──
+function sbm(){
+  if(!document.getElementById('fn').value.trim()||!document.getElementById('fe').value.trim()||!document.getElementById('ft').value){
+    alert("Будь ласка, заповніть ім'я, email та оберіть тур.");return;}
+  document.getElementById('bk-f').style.display='none';
+  document.getElementById('bk-ok').style.display='block';
+}
+
+// ── LIGHTBOX ──
+const LB=[
+  {s:'https://images.unsplash.com/photo-1509356843151-3e7d96241e11?auto=format&fit=crop&w=1400&q=80',c:'🏰 Стокгольм'},
+  {s:'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=1400&q=80',c:'🌌 Aurora Borealis'},
+  {s:'https://images.unsplash.com/photo-1505832018823-50331d70d237?auto=format&fit=crop&w=1400&q=80',c:'🌊 Архіпелаг'},
+  {s:'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1400&q=80',c:'⚓ Гетеборг'},
+  {s:'https://images.unsplash.com/photo-1443926818681-717d074a57af?auto=format&fit=crop&w=1400&q=80',c:'🌲 Ліс восени'},
+  {s:'https://images.unsplash.com/photo-1472653816316-3ad6f10a6592?auto=format&fit=crop&w=1400&q=80',c:'🌸 Midsommar'},
+  {s:'https://images.unsplash.com/photo-1596541223130-5d31a73fb6c6?auto=format&fit=crop&w=1400&q=80',c:'🏡 Шведське село'},
+  {s:'https://images.unsplash.com/photo-1543324545-0985223232c1?auto=format&fit=crop&w=1400&q=80',c:'☕ Fika'},
+  {s:'https://images.unsplash.com/photo-1529193591184-b1d580690dd0?auto=format&fit=crop&w=1400&q=80',c:'🍽️ Köttbullar'},
+  {s:'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?auto=format&fit=crop&w=1400&q=80',c:'🎨 Дизайн'},
+  {s:'https://images.unsplash.com/photo-1504700610630-ac6aba3536d3?auto=format&fit=crop&w=1400&q=80',c:'☀️ Полярний день'},
+  {s:'https://images.unsplash.com/photo-1605333145025-0e8a719c8032?auto=format&fit=crop&w=1400&q=80',c:'🥐 Kanelbullar'},
+];
+let li=0;
+const lbEl=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCap=document.getElementById('lb-cap');
+function oLB(i){li=i;lbImg.src=LB[i].s;lbCap.textContent=LB[i].c;lbEl.classList.add('open');document.body.style.overflow='hidden';}
+function clLB(){lbEl.classList.remove('open');document.body.style.overflow='';}
+function lbN(d){li=(li+d+LB.length)%LB.length;lbImg.src=LB[li].s;lbCap.textContent=LB[li].c;}
+lbEl.addEventListener('click',e=>{if(e.target===lbEl)clLB();});
+document.addEventListener('keydown',e=>{
+  if(!lbEl.classList.contains('open'))return;
+  if(e.key==='ArrowRight')lbN(1);
+  else if(e.key==='ArrowLeft')lbN(-1);
+  else if(e.key==='Escape')clLB();
+});
+
+// ── SCROLL REVEAL (throttled) ──
+let rvTick=false;
+function rv(){
+  document.querySelectorAll('.rv:not(.v),.rv2:not(.v)').forEach((el,i)=>{
+    if(el.getBoundingClientRect().top<window.innerHeight-40)
+      setTimeout(()=>el.classList.add('v'),i*60);
+  });
+}
+window.addEventListener('scroll',()=>{if(!rvTick){rvTick=true;requestAnimationFrame(()=>{rv();rvTick=false;});}},{passive:true});
+window.addEventListener('load',rv);
+setTimeout(rv,500);
+
+// ── REDUCE MOTION ──
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.querySelectorAll('.bl').forEach(b=>b.style.animation='none');
+}
+</script>
+</body>
+</html>
